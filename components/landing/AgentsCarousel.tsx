@@ -9,103 +9,100 @@ export default function AgentsCarousel() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="agents" className="section-padding relative overflow-hidden" ref={ref}>
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="text-center mb-16"
-        >
-          <div className="badge-cyan mb-4 mx-auto w-fit">
-            <span>🤖</span> Multi-Agent System
-          </div>
-          <h2 className="section-title font-display">
-            10 AI Agents Working <span className="gradient-text">For You 24/7</span>
+    <section id="agents" className="relative py-24 bg-[#02040a]" ref={ref}>
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
+        {/* Section Header */}
+        <div className="section-header">
+          <span className="section-label">
+            🤖 Multi-Agent Engine
+          </span>
+          <h2 className="section-heading font-sans font-bold">
+            10 Autonomous <span className="gradient-text">Coordinated Agents</span>
           </h2>
-          <p className="section-subtitle">
-            Each agent specializes in one critical aspect of your success — together they form an unstoppable AI workforce.
+          <p className="section-desc">
+            A dedicated suite of specialized AI workers communicating via our telemetry backend to drive you to success.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Agents Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        {/* 10 Agent Cards Grid (Equal Heights, widths, proper grid spacing, modern hover animations) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 items-stretch mt-12">
           {AGENTS_INFO.map((agent, i) => (
             <motion.div
               key={agent.id}
-              initial={{ opacity: 0, scale: 0.85 }}
+              initial={{ opacity: 0, scale: 0.94 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              whileHover={{ y: -8, scale: 1.03 }}
-              className="relative group rounded-2xl p-5 cursor-pointer transition-all duration-300"
-              style={{
-                background: `linear-gradient(135deg, ${agent.color}12, ${agent.color}05)`,
-                border: `1px solid ${agent.color}25`,
-              }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              whileHover={{ y: -6, scale: 1.02 }}
+              className="card-agent flex flex-col justify-between h-full bg-slate-950/50 border border-white/[0.04] p-6 cursor-pointer relative group transition-all duration-300"
             >
-              {/* Active indicator */}
-              <motion.div
-                className="absolute top-3 right-3 w-2 h-2 rounded-full"
-                style={{ background: agent.color }}
-                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+              {/* Dynamic glowing border highlight */}
+              <div
+                className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{
+                  boxShadow: `inset 0 0 0 1.2px ${agent.color}50, 0 0 20px ${agent.color}15`,
+                }}
               />
 
-              {/* Icon */}
-              <div className="text-3xl mb-3">{agent.icon}</div>
+              <div>
+                {/* Active Indicator & Icon Row */}
+                <div className="flex items-center justify-between mb-4.5">
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center text-xl">
+                    {agent.icon}
+                  </div>
+                  <div className="flex items-center gap-1.5 bg-white/[0.02] border border-white/5 py-0.5 px-2 rounded-full">
+                    <motion.div
+                      className="w-1.5 h-1.5 rounded-full"
+                      style={{ background: agent.color }}
+                      animate={{ scale: [1, 1.4, 1], opacity: [1, 0.4, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                    />
+                    <span className="text-[9px] font-bold text-slate-500 font-mono">LIVE</span>
+                  </div>
+                </div>
 
-              {/* Agent Number */}
-              <div
-                className="text-[10px] font-bold mb-1 font-mono"
-                style={{ color: agent.color }}
-              >
-                AGENT #{String(agent.id).padStart(2, "0")}
+                {/* Agent Number Label */}
+                <div
+                  className="text-[10px] font-bold font-mono tracking-wider mb-1"
+                  style={{ color: agent.color }}
+                >
+                  MODULE #{String(agent.id).padStart(2, "0")}
+                </div>
+
+                {/* Agent Name */}
+                <h3 className="font-sans font-bold text-white text-sm mb-2 leading-snug tracking-tight">
+                  {agent.name}
+                </h3>
+
+                {/* Agent Description */}
+                <p className="text-slate-500 text-[12px] leading-relaxed">
+                  {agent.description}
+                </p>
               </div>
-
-              {/* Name */}
-              <h3 className="font-display font-semibold text-white text-sm mb-2 leading-tight">
-                {agent.name}
-              </h3>
-
-              {/* Description */}
-              <p className="text-slate-500 text-xs leading-relaxed">
-                {agent.description}
-              </p>
-
-              {/* Hover glow border */}
-              <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{ boxShadow: `inset 0 0 0 1px ${agent.color}60, 0 0 30px ${agent.color}20` }}
-              />
             </motion.div>
           ))}
         </div>
 
-        {/* Connection Visualization */}
+        {/* Coordinated System status board */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 1 }}
-          className="mt-12 p-6 rounded-2xl text-center"
-          style={{
-            background: "linear-gradient(135deg, rgba(124,21,240,0.08), rgba(6,182,212,0.05))",
-            border: "1px solid rgba(124,21,240,0.2)",
-          }}
+          initial={{ opacity: 0, y: 15 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.8 }}
+          className="mt-14 p-5 rounded-xl text-center max-w-3xl mx-auto bg-gradient-to-r from-violet-500/[0.04] to-cyan-500/[0.03] border border-violet-500/15"
         >
-          <div className="flex items-center justify-center gap-4 flex-wrap">
+          <div className="flex items-center justify-center gap-x-8 gap-y-3 flex-wrap">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-slate-400 text-xs">All agents active</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-slate-400 text-xs font-medium font-mono">Agent pipeline operational</span>
             </div>
-            <div className="h-4 w-px bg-slate-700" />
+            <div className="hidden sm:block h-3 w-px bg-slate-800" />
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-              <span className="text-slate-400 text-xs">Powered by Gemini 2.5 Pro</span>
+              <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
+              <span className="text-slate-400 text-xs font-medium font-mono">10 dynamic system hooks active</span>
             </div>
-            <div className="h-4 w-px bg-slate-700" />
+            <div className="hidden sm:block h-3 w-px bg-slate-800" />
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-slate-400 text-xs">Orchestrated via Google Cloud</span>
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="text-slate-400 text-xs font-medium font-mono">Orchestrated dynamically via Edge</span>
             </div>
           </div>
         </motion.div>

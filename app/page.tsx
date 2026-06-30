@@ -2,6 +2,7 @@ import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
 import StatsSection from "@/components/landing/StatsSection";
 import HowItWorks from "@/components/landing/HowItWorks";
+import ComparisonSection from "@/components/landing/ComparisonSection";
 import FeaturesGrid from "@/components/landing/FeaturesGrid";
 import AlertShowcase from "@/components/landing/AlertShowcase";
 import AgentsCarousel from "@/components/landing/AgentsCarousel";
@@ -19,6 +20,7 @@ export default function Home() {
       <HeroSection />
       <StatsSection />
       <HowItWorks />
+      <ComparisonSection />
       <FeaturesGrid />
       <AlertShowcase />
       <AgentsCarousel />

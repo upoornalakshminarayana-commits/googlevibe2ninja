@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Play, Zap, Brain, Target, TrendingUp } from "lucide-react";
+import { ArrowRight, Play, Zap } from "lucide-react";
 import { useRef } from "react";
 
 const floatingCards = [
@@ -13,190 +13,165 @@ const floatingCards = [
 ];
 
 const agentOrbs = [
-  { label: "Goal AI", color: "#7c15f0", x: "10%", y: "20%", size: 60 },
-  { label: "Risk AI", color: "#f59e0b", x: "85%", y: "15%", size: 50 },
-  { label: "Chat AI", color: "#06b6d4", x: "75%", y: "70%", size: 55 },
-  { label: "Plan AI", color: "#10b981", x: "15%", y: "75%", size: 48 },
-  { label: "Core", color: "#a855f7", x: "50%", y: "45%", size: 80 },
+  { label: "Goal AI", color: "#7c15f0", x: "12%", y: "22%", size: 60 },
+  { label: "Risk AI", color: "#f59e0b", x: "88%", y: "18%", size: 52 },
+  { label: "Chat AI", color: "#06b6d4", x: "82%", y: "68%", size: 56 },
+  { label: "Plan AI", color: "#10b981", x: "14%", y: "72%", size: 50 },
+  { label: "Core", color: "#a855f7", x: "50%", y: "48%", size: 84 },
 ];
 
 export default function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   return (
     <section
       ref={ref}
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16"
-      style={{ background: "linear-gradient(135deg, #03060f 0%, #0a1628 40%, #1a0533 70%, #03060f 100%)" }}
+      className="relative min-h-[92vh] lg:min-h-[96vh] flex flex-col items-center justify-center overflow-hidden pt-28 pb-16"
+      style={{ background: "linear-gradient(180deg, #02040a 0%, #050b18 45%, #0f0422 80%, #02040a 100%)" }}
     >
       {/* Animated Background Orbs */}
-      <motion.div style={{ y }} className="absolute inset-0 pointer-events-none">
-        <div className="orb orb-violet absolute top-[-10%] left-[-5%] opacity-20" />
-        <div className="orb orb-cyan absolute bottom-[-10%] right-[-5%] opacity-15 animation-delay-4000" />
-        <div className="orb orb-violet absolute top-[40%] right-[10%] w-96 h-96 opacity-10" />
+      <motion.div style={{ y }} className="absolute inset-0 pointer-events-none z-0">
+        <div className="orb orb-violet absolute top-[5%] left-[-5%] opacity-15" />
+        <div className="orb orb-cyan absolute bottom-[5%] right-[-5%] opacity-10" />
+        <div className="orb orb-violet absolute top-[35%] right-[15%] w-80 h-80 opacity-8" />
       </motion.div>
 
       {/* Grid Pattern */}
-      <div className="absolute inset-0 grid-pattern opacity-40" />
+      <div className="absolute inset-0 grid-pattern opacity-30 z-0 pointer-events-none" />
 
-      {/* Floating Agent Orbs Visualization */}
-      <div className="absolute inset-0 hidden lg:block pointer-events-none">
+      {/* Connection Lines (Desktop only) */}
+      <div className="absolute inset-0 hidden lg:block pointer-events-none z-0">
         {agentOrbs.map((orb, i) => (
           <motion.div
             key={orb.label}
-            className="absolute rounded-full flex items-center justify-center text-[9px] font-bold text-white"
+            className="absolute rounded-full flex items-center justify-center text-[10px] font-bold text-white font-mono"
             style={{
               left: orb.x,
               top: orb.y,
               width: orb.size,
               height: orb.size,
-              background: `radial-gradient(circle, ${orb.color}40, ${orb.color}15)`,
-              border: `1px solid ${orb.color}50`,
-              boxShadow: `0 0 ${orb.size/2}px ${orb.color}30`,
+              background: `radial-gradient(circle, ${orb.color}33, ${orb.color}10)`,
+              border: `1px solid ${orb.color}40`,
+              boxShadow: `0 0 ${orb.size / 2}px ${orb.color}20`,
               transform: "translate(-50%, -50%)",
             }}
             animate={{
-              y: [0, -15, 0],
-              scale: [1, 1.05, 1],
+              y: [0, -10, 0],
+              scale: [1, 1.04, 1],
               boxShadow: [
-                `0 0 ${orb.size/2}px ${orb.color}30`,
-                `0 0 ${orb.size}px ${orb.color}50`,
-                `0 0 ${orb.size/2}px ${orb.color}30`,
+                `0 0 ${orb.size / 2}px ${orb.color}20`,
+                `0 0 ${orb.size}px ${orb.color}35`,
+                `0 0 ${orb.size / 2}px ${orb.color}20`,
               ],
             }}
-            transition={{ duration: 4 + i, repeat: Infinity, delay: i * 0.7, ease: "easeInOut" }}
+            transition={{ duration: 5 + i, repeat: Infinity, delay: i * 0.5, ease: "easeInOut" }}
           >
             {orb.label}
           </motion.div>
         ))}
 
-        {/* Connection Lines */}
-        <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+        <svg className="absolute inset-0 w-full h-full opacity-[0.08]" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#7c15f0" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.6" />
+              <stop offset="0%" stopColor="#7c15f0" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.5" />
             </linearGradient>
           </defs>
-          <line x1="10%" y1="20%" x2="50%" y2="45%" stroke="url(#line-grad)" strokeWidth="1" />
-          <line x1="85%" y1="15%" x2="50%" y2="45%" stroke="url(#line-grad)" strokeWidth="1" />
-          <line x1="75%" y1="70%" x2="50%" y2="45%" stroke="url(#line-grad)" strokeWidth="1" />
-          <line x1="15%" y1="75%" x2="50%" y2="45%" stroke="url(#line-grad)" strokeWidth="1" />
+          <line x1="12%" y1="22%" x2="50%" y2="48%" stroke="url(#line-grad)" strokeWidth="1.2" />
+          <line x1="88%" y1="18%" x2="50%" y2="48%" stroke="url(#line-grad)" strokeWidth="1.2" />
+          <line x1="82%" y1="68%" x2="50%" y2="48%" stroke="url(#line-grad)" strokeWidth="1.2" />
+          <line x1="14%" y1="72%" x2="50%" y2="48%" stroke="url(#line-grad)" strokeWidth="1.2" />
         </svg>
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 text-center max-w-5xl mx-auto px-4">
-        {/* Badge */}
+      {/* Main Content Area */}
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-6 flex flex-col items-center justify-center">
+        {/* Top Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="flex justify-center mb-6"
         >
-          <div className="badge-violet gap-2 text-sm py-1.5 px-4">
-            <Zap size={12} className="animate-pulse" />
-            Powered by Gemini 2.5 Pro — 10 AI Agents
-            <Zap size={12} className="animate-pulse" />
+          <div className="badge-violet gap-2 text-xs py-1.5 px-4 bg-violet-500/10 border border-violet-500/30">
+            <Zap size={11} className="text-violet-400 fill-violet-400 animate-pulse" />
+            <span>Powered by Gemini 2.5 Pro — 10 Specialized Agents</span>
           </div>
         </motion.div>
 
-        {/* Headline */}
+        {/* Hero Title Redesign (OpenAI & Vercel style) */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-display font-bold leading-[1.1] mb-6"
-          style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="font-sans font-extrabold tracking-tight text-white mb-6 text-balance"
+          style={{
+            fontSize: "clamp(2.5rem, 5.2vw, 4.5rem)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.035em",
+          }}
         >
-          <span className="text-white">Your AI Companion</span>
-          <br />
-          <span className="gradient-text">That Never Lets You</span>
-          <br />
-          <span className="text-white">Miss a Deadline</span>
+          Your Autonomous AI Companion <br />
+          <span className="gradient-text">That Never Misses a Deadline</span>
         </motion.h1>
 
-        {/* Subheadline */}
+        {/* Subtitle */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-slate-400 max-w-2xl mx-auto mb-9 text-base md:text-[17px] leading-relaxed text-balance"
         >
-          PathPilot AI uses <span className="text-violet-400 font-semibold">10 specialized Gemini agents</span> to predict
-          deadline failures, generate recovery plans, and guide{" "}
-          <span className="text-cyan-400 font-semibold">JEE, NEET, GATE aspirants</span> and professionals to success.
+          PathPilot AI coordinates <span className="text-violet-400 font-semibold">10 autonomous Gemini agents</span> to
+          model your study habits, predict delays weeks in advance, and adapt schedules for{" "}
+          <span className="text-cyan-400 font-semibold">JEE, NEET, and GATE</span> aspirants.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* Action Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-col sm:flex-row gap-3 justify-center items-center w-full sm:w-auto mb-16"
         >
-          <Link href="/auth/login" className="btn-primary text-base py-3.5 px-8">
-            Start Your Journey Free
-            <ArrowRight size={18} />
+          <Link href="/auth/login" className="btn-primary text-sm py-3 px-7 rounded-xl w-full sm:w-auto">
+            Get Started Free
+            <ArrowRight size={16} />
           </Link>
-          <a href="#how-it-works" className="btn-secondary text-base py-3.5 px-8">
-            <Play size={16} className="fill-current" />
-            See How It Works
+          <a href="#how-it-works" className="btn-ghost text-sm py-3 px-6 rounded-xl w-full sm:w-auto flex items-center justify-center gap-2">
+            <Play size={12} className="fill-current text-slate-300" />
+            Watch Product Demo
           </a>
         </motion.div>
 
-        {/* Trust Line */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="text-slate-500 text-sm mb-16"
-        >
-          No credit card required · 50,000+ students & professionals · Powered by Google AI
-        </motion.p>
-
-        {/* Floating Notification Cards */}
+        {/* Floating Notification Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.7 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl mx-auto"
         >
           {floatingCards.map((card, i) => (
             <motion.div
               key={i}
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3 + i * 0.5, repeat: Infinity, delay: card.delay, ease: "easeInOut" }}
-              className="glass rounded-xl p-3 text-left"
-              style={{ borderColor: `${card.color}30` }}
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4.5 + i * 0.4, repeat: Infinity, delay: card.delay, ease: "easeInOut" }}
+              className="glass rounded-xl p-4 text-left border transition-all duration-300 hover:bg-white/[0.06]"
+              style={{ borderColor: `${card.color}25` }}
             >
-              <div className="text-xl mb-1.5">{card.icon}</div>
-              <div className="text-xs font-semibold text-white mb-0.5">{card.label}</div>
-              <div className="text-[10px] text-slate-500 leading-tight">{card.sub}</div>
+              <div className="text-2xl mb-2">{card.icon}</div>
+              <div className="text-[13px] font-bold text-white mb-1 truncate">{card.label}</div>
+              <div className="text-[11px] text-slate-500 leading-snug line-clamp-2">{card.sub}</div>
             </motion.div>
           ))}
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="text-slate-600 text-xs font-medium tracking-widest uppercase">Scroll to explore</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-5 h-8 rounded-full border border-slate-700 flex items-start justify-center p-1"
-        >
-          <div className="w-1 h-2 rounded-full bg-violet-500" />
-        </motion.div>
-      </motion.div>
+      {/* Subtle bottom gradient shadow */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#02040a] to-transparent pointer-events-none" />
     </section>
   );
 }
